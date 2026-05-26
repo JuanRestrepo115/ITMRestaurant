@@ -7,7 +7,7 @@ El desarrollo backend replica de forma estricta la arquitectura desacoplada por 
 
 ---
 
-## 👥 Integrantes (Grupo de 3)
+## 👥 Integrantes
 * **Juan Sebastian Restrepo Caro**
 ---
 
@@ -21,9 +21,7 @@ El desarrollo backend replica de forma estricta la arquitectura desacoplada por 
 * **Documentación de API:** Swagger UI
 
 ### Frontend
-* **Framework/Librería:** Angular / React *(Nota: Deja solo el que elijan usar)*
-* **Estilos / UI:** Bootstrap / Tailwind CSS
-* **Cliente HTTP:** Axios / HttpClient
+* **En Desarrollo**
 
 
 ---
