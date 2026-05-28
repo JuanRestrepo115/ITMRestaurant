@@ -15,15 +15,13 @@ namespace ITMRestaurant.DataAccess.Repositories
             return await _dbSet.AnyAsync(x => x.Email == email);
         }
 
-        public async Task<Customer> GetByEmailAsync(string email)
+        public async Task<Customer?> GetByEmailAsync(string email)
         {
-            var customer = await _dbSet.FirstOrDefaultAsync(c => c.Email.ToLower() == email.ToLower());
-            if (customer == null)   
-                throw new InvalidOperationException($"Customer with email '{email}' not found.");
-            return customer;
+            return await _dbSet
+                .FirstOrDefaultAsync(c => c.Email.ToLower() == email.ToLower());
         }
 
-        public async Task<Customer> GetCustomerWithReservationsAsync(int id)
+        public async Task<Customer?> GetCustomerWithReservationsAsync(int id)
         {
             return await _dbSet
                 .Include(c => c.Reservations)
