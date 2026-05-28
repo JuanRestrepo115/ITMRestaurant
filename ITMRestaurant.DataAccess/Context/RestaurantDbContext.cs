@@ -10,11 +10,12 @@ namespace ITMRestaurant.DataAccess.Context
         }
 
         public DbSet<Customer> Customers => Set<Customer>();
+        public DbSet<Table> Tables => Set<Table>();
 
 
-        //---- Customers Building ----
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //---- Customers Building ----
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -43,7 +44,36 @@ namespace ITMRestaurant.DataAccess.Context
                 entity.Property(c => c.UpdatedAt)
                       .IsRequired(false);
             });
+            //---- Tables Building ----
+            modelBuilder.Entity<Table>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+
+                entity.Property(t => t.TableNumber)
+                      .IsRequired();
+
+                entity.HasIndex(t => t.TableNumber)
+                      .IsUnique();
+
+                entity.Property(t => t.Capacity)
+                      .IsRequired();
+
+                entity.Property(t => t.Location)
+                      .HasMaxLength(100);
+
+                entity.Property(t => t.State)
+                      .IsRequired()
+                      .HasConversion<int>();
+
+                entity.Property(t => t.CreatedAt)
+                      .IsRequired();
+
+                entity.Property(t => t.UpdatedAt)
+                      .IsRequired(false);
+            });
+
         }
+
 
 
 

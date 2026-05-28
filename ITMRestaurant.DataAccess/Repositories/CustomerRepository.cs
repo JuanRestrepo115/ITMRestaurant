@@ -26,7 +26,7 @@ namespace ITMRestaurant.DataAccess.Repositories
         public async Task<Customer> GetCustomerWithReservationsAsync(int id)
         {
             return await _dbSet
-                .Include(c => c.Reservation)
+                .Include(c => c.Reservations)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 

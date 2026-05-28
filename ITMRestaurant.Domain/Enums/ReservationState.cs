@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ITMRestaurant.Domain.Enums
+﻿namespace ITMRestaurant.Domain.Enums
 {
-    internal class ReservationState
+    public enum ReservationState
     {
+        Pending = 1,
+        Confirmed = 2,
+        Cancelled = 3,
+        Completed = 4,
+        NoShow = 5
     }
 }
