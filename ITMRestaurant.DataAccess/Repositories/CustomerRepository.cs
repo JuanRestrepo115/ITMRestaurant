@@ -25,6 +25,9 @@ namespace ITMRestaurant.DataAccess.Repositories
         {
             return await _dbSet
                 .Include(c => c.Reservations)
+                    .ThenInclude(r => r.Table)
+                .Include(c => c.Reservations)
+                    .ThenInclude(r => r.Restaurant)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 

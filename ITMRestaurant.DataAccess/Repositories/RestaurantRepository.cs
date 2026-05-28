@@ -29,6 +29,17 @@ namespace ITMRestaurant.DataAccess.Repositories
                 .Include(r => r.Tables)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
+
+        public async Task UpdateIsActiveAsync(int id, bool isActive)
+        {
+            var restaurant = await _dbSet.FindAsync(id);
+            if (restaurant != null)
+            {
+                restaurant.IsActive = isActive;
+                restaurant.UpdatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
 

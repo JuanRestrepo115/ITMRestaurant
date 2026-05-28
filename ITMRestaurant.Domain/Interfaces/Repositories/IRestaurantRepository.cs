@@ -9,5 +9,7 @@ namespace ITMRestaurant.Domain.Interfaces.Repositories
         Task<Restaurant?> GetRestaurantsWithTablesAsync(int id);
 
         Task<Restaurant?> GetByBranchAsync(string branch);
+
+        Task UpdateIsActiveAsync(int id, bool isActive);
     }
 }

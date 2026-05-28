@@ -6,5 +6,7 @@ namespace ITMRestaurant.Domain.Interfaces.Repositories
         Task<Customer?> GetByEmailAsync(string email);
         Task<Customer?> GetCustomerWithReservationsAsync(int id);
         Task <bool> ExistsByEmailAsync(string email);
+        
+
     }
 }
