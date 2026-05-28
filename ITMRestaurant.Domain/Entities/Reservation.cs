@@ -3,21 +3,22 @@ namespace ITMRestaurant.Domain.Entities
 {
     public class Reservation: AuditBase
     {
-        public int RestaurantID { get; set; }
 
-        public int CustomerID { get; set; }
+        // Foreign Keys
+        public int RestaurantId{ get; set; }
 
-        public int TableID { get; set; }
+        public int CustomerId { get; set; }
+
+        public int TableId { get; set; }
 
         public DateTime ReservationTime { get; set; }
 
         public int NumberOfGuests { get; set; }
 
-        //Enum de Reservation
-
-        public ReservationState State { get; set; }
-
         public string Observations { get; set; } = string.Empty;
+
+        //Enum de Reservation
+        public ReservationState State { get; set; }
 
         //Navigation Properties
 

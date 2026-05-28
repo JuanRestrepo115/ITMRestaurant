@@ -6,6 +6,7 @@ namespace ITMRestaurant.Domain.Entities
 {
     public class ReservationDetail: AuditBase
     {
+        // Foreing Keys
         public int ReservationId { get; set; }
 
         public int MenuItemId { get; set; }

@@ -5,6 +5,7 @@ namespace ITMRestaurant.Domain.Entities
     {
         public int TableNumber { get; set; }
 
+        //Foreign Key
         public int RestaurantId { get; set; }
 
         public int Capacity { get; set; }
