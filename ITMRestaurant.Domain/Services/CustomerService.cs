@@ -37,7 +37,7 @@ namespace ITMRestaurant.Domain.Services
             if (!exists)
             {
                 _logger.LogWarning("Attempt to delete a non-existing customer with ID: {Id}", id);
-                throw new InvalidOperationException("Customer not found.");
+                throw new KeyNotFoundException($"Customer with ID {id} not found.");
             }
 
             _logger.LogInformation("Deleting customer with ID: {Id}", id);
@@ -50,7 +50,7 @@ namespace ITMRestaurant.Domain.Services
             return await _customerRepository.GetAllAsync();
         }
 
-        public async Task<Customer> GetByIdAsync(int id)
+        public async Task<Customer?> GetByIdAsync(int id)
         {
             _logger.LogInformation("Retrieving customer with ID: {Id}", id);
             var customer = await _customerRepository.GetByIdAsync(id);
@@ -68,7 +68,7 @@ namespace ITMRestaurant.Domain.Services
             if (existingCustomer == null)
             {
                 _logger.LogWarning("Attempt to update a non-existing customer with ID: {Id}", id);
-                throw new InvalidOperationException("Customer not found.");
+                throw new KeyNotFoundException($"Customer with ID {id} not found.");
             }
 
             //Validar correo unico (Si cambio)
