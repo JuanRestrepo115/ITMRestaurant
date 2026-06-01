@@ -94,5 +94,13 @@ namespace ITMRestaurant.Domain.Services
 
 
         }
+
+        public async Task<Customer?> GetCustomerWithReservationsAsync(int id)
+        {
+            _logger.LogInformation("Retrieving customer with reservations for ID: {Id}", id);
+            return await _customerRepository.GetCustomerWithReservationsAsync(id);
+        }
+    
+    
     }
 }

@@ -13,5 +13,7 @@ namespace ITMRestaurant.Domain.Interfaces.Services
         Task<MenuItem> CreateAsync(MenuItem menuItem);
         Task UpdateAsync(int id, MenuItem menuItem);
         Task DeleteAsync(int id);
+
+        Task UpdateAvailabilityAsync(int id, bool isAvailable);
     }
 }

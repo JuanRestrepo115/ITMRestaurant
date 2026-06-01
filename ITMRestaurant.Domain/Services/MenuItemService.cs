@@ -136,5 +136,25 @@ namespace ITMRestaurant.Domain.Services
             _logger.LogInformation("Deleting menu item with ID: {Id}", id);
             await _menuItemRepository.DeleteAsync(id);
         }
+
+        public async Task UpdateAvailabilityAsync(int id, bool isAvailable)
+        {
+            var menuItem = await _menuItemRepository.GetByIdAsync(id);
+            if (menuItem == null)
+            {
+                _logger.LogWarning("Attempt to update availability of a non-existing menu item with ID: {Id}", id);
+                throw new KeyNotFoundException($"Menu item with ID {id} not found.");
+            }
+
+            // Validar que no este ya en el mismo estado
+            if (menuItem.IsAvailable == isAvailable)
+            {
+                _logger.LogWarning("Menu item with ID {Id} is already {IsAvailable}", id, isAvailable ? "available" : "unavailable");
+                throw new InvalidOperationException($"Menu item is already {(isAvailable ? "available" : "unavailable")}.");
+            }
+
+            _logger.LogInformation("Updating availability of menu item with ID: {Id} to {IsAvailable}", id, isAvailable);
+            await _menuItemRepository.UpdateAvailabilityAsync(id, isAvailable);
+        }
     }
 }
