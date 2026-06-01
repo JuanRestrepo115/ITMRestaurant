@@ -1,6 +1,7 @@
 using ITMRestaurant.API.Mappings;
 using ITMRestaurant.DataAccess.Context;
 using ITMRestaurant.DataAccess.Repositories;
+using ITMRestaurant.DataAccess.Seeders;
 using ITMRestaurant.Domain.Interfaces.Repositories;
 using ITMRestaurant.Domain.Interfaces.Services;
 using ITMRestaurant.Domain.Services;
@@ -67,5 +68,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// -- DataSeeder --
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<RestaurantDbContext>();
+    await DataSeeder.SeedAsync(context);
+}
 
 app.Run();

@@ -15,9 +15,9 @@ namespace ITMRestaurant.DataAccess.Seeders
             // ═══ 1. RESTAURANTES ═══
             var restaurants = new List<Restaurant>
             {
-                new() { Branch = "Sucursal El Poblado", Address = "Calle 10 #43-12, El Poblado", PhoneNumber = "604-111-1111", IsActive = true, CreatedAt = DateTime.UtcNow },
-                new() { Branch = "Sucursal Laureles", Address = "Circular 73 #39-15, Laureles", PhoneNumber = "604-222-2222", IsActive = true, CreatedAt = DateTime.UtcNow },
-                new() { Branch = "Sucursal Envigado", Address = "Calle 34 Sur #43-20, Envigado", PhoneNumber = "604-333-3333", IsActive = true, CreatedAt = DateTime.UtcNow },
+                new() { Branch = "Sucursal Robledo", Address = "Cl. 75 #75101", PhoneNumber = "604-111-1111", IsActive = true, CreatedAt = DateTime.UtcNow },
+                new() { Branch = "Sucursal Fraternidad", Address = "Cl. 54a #30-01", PhoneNumber = "604-222-2222", IsActive = true, CreatedAt = DateTime.UtcNow },
+                new() { Branch = "Sucursal Castilla", Address = "Cra. 65 #98 A-75", PhoneNumber = "604-333-3333", IsActive = true, CreatedAt = DateTime.UtcNow },
             };
 
             context.Restaurants.AddRange(restaurants);
@@ -26,19 +26,19 @@ namespace ITMRestaurant.DataAccess.Seeders
             // ═══ 2. MESAS ═══
             var tables = new List<Table>
             {
-                // Sucursal El Poblado
+                // Sucursal Robledo
                 new() { TableNumber = 1, RestaurantId = restaurants[0].Id, Capacity = 2, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 2, RestaurantId = restaurants[0].Id, Capacity = 4, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 3, RestaurantId = restaurants[0].Id, Capacity = 6, Location = "Terraza", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 4, RestaurantId = restaurants[0].Id, Capacity = 8, Location = "Terraza", State = TableState.Available, CreatedAt = DateTime.UtcNow },
 
-                // Sucursal Laureles
+                // Sucursal Fraternidad
                 new() { TableNumber = 5, RestaurantId = restaurants[1].Id, Capacity = 2, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 6, RestaurantId = restaurants[1].Id, Capacity = 4, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 7, RestaurantId = restaurants[1].Id, Capacity = 6, Location = "Terraza", State = TableState.Available, CreatedAt = DateTime.UtcNow },
-                new() { TableNumber = 8, RestaurantId = restaurants[1].Id, Capacity = 8, Location = "VIP", State = TableState.Available, CreatedAt = DateTime.UtcNow },
+                
 
-                // Sucursal Envigado
+                // Sucursal Castilla
                 new() { TableNumber = 9,  RestaurantId = restaurants[2].Id, Capacity = 2, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 10, RestaurantId = restaurants[2].Id, Capacity = 4, Location = "Interior", State = TableState.Available, CreatedAt = DateTime.UtcNow },
                 new() { TableNumber = 11, RestaurantId = restaurants[2].Id, Capacity = 6, Location = "Terraza", State = TableState.Available, CreatedAt = DateTime.UtcNow },

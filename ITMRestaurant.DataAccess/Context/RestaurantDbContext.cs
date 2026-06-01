@@ -102,13 +102,22 @@ namespace ITMRestaurant.DataAccess.Context
                       .IsRequired(false);
 
                 // Relacion con el Cliente 1:N
-
                 entity.HasOne(r => r.Customer)
                       .WithMany(c => c.Reservations)
                       .HasForeignKey(r => r.CustomerId)
                       .OnDelete(DeleteBehavior.Restrict);
 
+                // Relacion con el Restaurante 1:N
+                entity.HasOne(r => r.Restaurant)
+                      .WithMany(res => res.Reservations)
+                      .HasForeignKey(r => r.RestaurantId)
+                      .OnDelete(DeleteBehavior.Cascade);
 
+                // Relacion con la Mesa 1:N
+                entity.HasOne(r => r.Table)
+                      .WithMany(t => t.Reservations)
+                      .HasForeignKey(r => r.TableId)
+                      .OnDelete(DeleteBehavior.Restrict); // 👈 Restrict para evitar múltiples CASCADE
             });
             //---- ReservationDetail ----
             modelBuilder.Entity<ReservationDetail>(entity =>
