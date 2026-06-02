@@ -23,13 +23,6 @@ namespace ITMRestaurant.DataAccess.Repositories
             return await _dbSet.FirstOrDefaultAsync(r => r.Branch == branch);
         }
 
-        public async Task<Restaurant?> GetRestaurantsWithTablesAsync(int id)
-        {
-            return await _dbSet
-                .Include(r => r.Tables)
-                .FirstOrDefaultAsync(r => r.Id == id);
-        }
-
         public async Task UpdateIsActiveAsync(int id, bool isActive)
         {
             var restaurant = await _dbSet.FindAsync(id);

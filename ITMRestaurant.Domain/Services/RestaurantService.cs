@@ -39,20 +39,6 @@ namespace ITMRestaurant.Domain.Services
             return await _restaurantRepository.GetActiveRestaurantAsync();
         }
 
-        public async Task<Restaurant?> GetRestaurantWithTablesAsync(int id)
-        {
-            _logger.LogInformation("Retrieving restaurant with tables for ID: {Id}", id);
-            var restaurant = await _restaurantRepository.GetRestaurantsWithTablesAsync(id);
-
-            if (restaurant == null)
-            {
-                _logger.LogWarning("Restaurant with ID {Id} not found", id);
-                throw new KeyNotFoundException($"Restaurant with ID {id} not found.");
-            }
-
-            return restaurant;
-        }
-
         public async Task UpdateIsActiveAsync(int id, bool isActive)
         {
             var restaurant = await _restaurantRepository.GetByIdAsync(id);

@@ -49,20 +49,6 @@ public class TableController : ControllerBase
         return Ok(tablesDto);
     }
 
-    [HttpGet("{id}/reservations")]
-    public async Task<ActionResult<TableResponseDTO>> GetWithReservations(int id)
-    {
-        try
-        {
-            var table = await _tableService.GetTableWithReservationsAsync(id);
-            var tableDto = _mapper.Map<TableResponseDTO>(table);
-            return Ok(tableDto);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-    }
 
     [HttpPost]
     public async Task<ActionResult<TableResponseDTO>> Create(TableRequestDTO dto)

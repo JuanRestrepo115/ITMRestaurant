@@ -7,7 +7,6 @@ namespace ITMRestaurant.Domain.Interfaces.Services
         Task<IEnumerable<Table>> GetAllAsync();
         Task<Table?> GetByIdAsync(int id);
         Task<IEnumerable<Table>> GetByStateAsync(TableState state);
-        Task<Table?> GetTableWithReservationsAsync(int id);
         Task UpdateStateAsync(int id, TableState newState);
         Task<Table> CreateAsync(Table table);
         Task UpdateAsync(int id, Table table);

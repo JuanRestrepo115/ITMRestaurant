@@ -48,21 +48,6 @@ public class RestaurantController : ControllerBase
         return Ok(restaurantsDto);
     }
 
-    [HttpGet("{id}/tables")]
-    public async Task<ActionResult<RestaurantResponseDTO>> GetWithTables(int id)
-    {
-        try
-        {
-            var restaurant = await _restaurantService.GetRestaurantWithTablesAsync(id);
-            var restaurantDto = _mapper.Map<RestaurantResponseDTO>(restaurant);
-            return Ok(restaurantDto);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-    }
-
     [HttpPost]
     public async Task<ActionResult<RestaurantResponseDTO>> Create(RestaurantRequestDTO dto)
     {

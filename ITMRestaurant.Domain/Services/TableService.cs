@@ -45,20 +45,6 @@ namespace ITMRestaurant.Domain.Services
             return await _tableRepository.GetByStateAsync(state);
         }
 
-        public async Task<Table?> GetTableWithReservationsAsync(int id)
-        {
-            _logger.LogInformation("Retrieving table with reservations for ID: {Id}", id);
-            var table = await _tableRepository.GetTableWithReservationsAsync(id);
-
-            if (table == null)
-            {
-                _logger.LogWarning("Table with ID {Id} not found", id);
-                throw new KeyNotFoundException($"Table with ID {id} not found.");
-            }
-
-            return table;
-        }
-
         public async Task UpdateStateAsync(int id, TableState newState)
         {
             var table = await _tableRepository.GetByIdAsync(id);

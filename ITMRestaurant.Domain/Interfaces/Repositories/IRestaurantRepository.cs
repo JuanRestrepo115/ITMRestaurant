@@ -6,8 +6,6 @@ namespace ITMRestaurant.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<Restaurant>> GetActiveRestaurantAsync();
 
-        Task<Restaurant?> GetRestaurantsWithTablesAsync(int id);
-
         Task<Restaurant?> GetByBranchAsync(string branch);
 
         Task UpdateIsActiveAsync(int id, bool isActive);

@@ -10,7 +10,6 @@ namespace ITMRestaurant.Domain.Interfaces.Services
         Task<IEnumerable<Restaurant>> GetAllAsync();
         Task<Restaurant?> GetByIdAsync(int id);
         Task<IEnumerable<Restaurant>> GetActiveRestaurantsAsync();
-        Task<Restaurant?> GetRestaurantWithTablesAsync(int id);
         Task UpdateIsActiveAsync(int id, bool isActive);
         Task<Restaurant> CreateAsync(Restaurant restaurant);
         Task UpdateAsync(int id, Restaurant restaurant);

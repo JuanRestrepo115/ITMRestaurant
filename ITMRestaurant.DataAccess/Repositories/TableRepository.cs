@@ -23,12 +23,6 @@ namespace ITMRestaurant.DataAccess.Repositories
             return await _dbSet.FirstOrDefaultAsync(t => t.TableNumber == tableNumber);
         }
 
-        public async Task<Table?> GetTableWithReservationsAsync(int id)
-        {
-            return await _dbSet
-                .Include(t => t.Reservations)
-                .FirstOrDefaultAsync(t => t.Id == id);
-        }
 
         public async Task UpdateStateAsync(int id, TableState newState)
         {
