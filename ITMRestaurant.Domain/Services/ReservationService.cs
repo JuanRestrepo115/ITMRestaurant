@@ -13,19 +13,23 @@ namespace ITMRestaurant.Domain.Services
         private readonly ITableRepository _tableRepository;
         private readonly IRestaurantRepository _restaurantRepository;
         private readonly ILogger<ReservationService> _logger;
+        private readonly IMenuItemRepository _menuItemRepository;
 
         public ReservationService(
             IReservationRepository reservationRepository,
             ICustomerRepository customerRepository,
             ITableRepository tableRepository,
             IRestaurantRepository restaurantRepository,
-            ILogger<ReservationService> logger)
+            ILogger<ReservationService> logger,
+            IMenuItemRepository menuItemRepository
+            )
         {
             _reservationRepository = reservationRepository;
             _customerRepository = customerRepository;
             _tableRepository = tableRepository;
             _restaurantRepository = restaurantRepository;
             _logger = logger;
+            _menuItemRepository = menuItemRepository;
         }
 
         public async Task<IEnumerable<Reservation>> GetAllAsync()
@@ -135,6 +139,16 @@ namespace ITMRestaurant.Domain.Services
             // Cambiar estado de la mesa a Reserved
             await _tableRepository.UpdateStateAsync(reservation.TableId, TableState.Reserved);
             _logger.LogInformation("Table with ID {TableId} state changed to Reserved", reservation.TableId);
+
+            foreach (var detail in reservation.ReservationDetails)
+            {
+                var menuItem = await _menuItemRepository.GetByIdAsync(detail.MenuItemId);
+                if (menuItem == null)
+                    throw new KeyNotFoundException($"MenuItem with ID {detail.MenuItemId} not found.");
+
+                detail.UnitPrice = menuItem.Price; // 👈 Precio real del backend
+                detail.CreatedAt = DateTime.UtcNow;
+            }
 
             _logger.LogInformation("Creating reservation for customer ID: {CustomerId}", reservation.CustomerId);
             return await _reservationRepository.CreateAsync(reservation);

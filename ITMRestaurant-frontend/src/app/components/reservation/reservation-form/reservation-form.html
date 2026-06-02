@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="header">
+    <h1>{{ isEditMode ? '✏️ Editar Reservación' : '➕ Nueva Reservación' }}</h1>
+    <a routerLink="/reservations" class="btn-back">← Volver</a>
+  </div>
+
+  <!-- Loading datos -->
+  @if (loadingData) {
+    <div class="loading">
+      <p>Cargando datos...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (error) {
+    <div class="alert alert-error">{{ error }}</div>
+  }
+
+  <!-- Success -->
+  @if (success) {
+    <div class="alert alert-success">{{ success }}</div>
+  }
+
+  @if (!loadingData) {
+    <form (ngSubmit)="onSubmit()">
+      <div class="cards-grid">
+
+        <!-- Card Info Reserva -->
+        <div class="card">
+          <h2>📋 Información de la Reserva</h2>
+
+          <div class="form-group">
+            <label>Cliente</label>
+            <select [(ngModel)]="reservation.customerId" name="customerId" required>
+              <option value="0">Selecciona un cliente</option>
+              @for (customer of customers; track customer.id) {
+                <option [value]="customer.id">
+                  {{ customer.firstName }} {{ customer.lastName }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Restaurante</label>
+            <select [(ngModel)]="reservation.restaurantId" name="restaurantId" 
+            (ngModelChange)="onRestaurantChange()" required>
+                <option value="0">Selecciona un restaurante</option>
+                @for (restaurant of restaurants; track restaurant.id) {
+                <option [value]="restaurant.id">{{ restaurant.branch }}</option>
+                }
+            </select>
+            </div>
+
+          <div class="form-group">
+            <label>Mesa</label>
+            <select [(ngModel)]="reservation.tableId" name="tableId" required>
+              <option value="0">Selecciona una mesa</option>
+              @for (table of tables; track table.id) {
+                <option [value]="table.id">
+                  Mesa {{ table.tableNumber }} — {{ table.location }} ({{ table.capacity }} personas)
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Fecha y Hora</label>
+            <input
+              type="datetime-local"
+              [(ngModel)]="reservation.reservationTime"
+              name="reservationTime"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Número de Personas</label>
+            <input
+              type="number"
+              [(ngModel)]="reservation.numberOfGuests"
+              name="numberOfGuests"
+              min="1"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Observaciones</label>
+            <textarea
+              [(ngModel)]="reservation.observations"
+              name="observations"
+              rows="3"
+              placeholder="Observaciones opcionales..."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Card Platos -->
+        <div class="card">
+          <h2>🍴 Platos Pedidos</h2>
+
+          <div class="add-item">
+            <select [(ngModel)]="selectedMenuItem" name="selectedMenuItem">
+              <option value="0">Selecciona un plato</option>
+              @for (item of menuItems; track item.id) {
+                <option [value]="item.id">
+                  {{ item.name }} — {{ item.price | currency:'COP':'symbol':'1.0-0' }}
+                </option>
+              }
+            </select>
+            <input
+              type="number"
+              [(ngModel)]="selectedQuantity"
+              name="selectedQuantity"
+              min="1"
+              placeholder="Cant."
+            />
+            <button type="button" (click)="addMenuItem()" class="btn-add">+ Agregar</button>
+          </div>
+
+          <!-- Lista de platos -->
+          @if (reservation.reservationDetails.length === 0) {
+            <p class="empty">No hay platos agregados</p>
+          }
+
+          @for (detail of reservation.reservationDetails; track detail.menuItemId) {
+            <div class="detail-item">
+              <div class="detail-info">
+                <span class="detail-name">{{ detail.menuItemName }}</span>
+                <span class="detail-price">
+                  {{ detail.quantity }} x {{ detail.unitPrice | currency:'COP':'symbol':'1.0-0' }}
+                </span>
+              </div>
+              <div class="detail-right">
+                <span class="detail-subtotal">
+                  {{ detail.quantity * detail.unitPrice | currency:'COP':'symbol':'1.0-0' }}
+                </span>
+                <button type="button" (click)="removeMenuItem(detail.menuItemId)" class="btn-remove">✕</button>
+              </div>
+            </div>
+          }
+
+          <!-- Total -->
+          @if (reservation.reservationDetails.length > 0) {
+            <div class="total">
+              <span>Total</span>
+              <span>{{ getTotal() | currency:'COP':'symbol':'1.0-0' }}</span>
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <!-- Botón Submit -->
+      <div class="submit-row">
+        <button type="submit" class="btn-submit" [disabled]="loading">
+          {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar Reservación' : 'Crear Reservación') }}
+        </button>
+      </div>
+
+    </form>
+  }
+</div>

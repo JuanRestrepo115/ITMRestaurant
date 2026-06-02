@@ -1,0 +1,107 @@
+<div class="container">
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading">
+      <p>Cargando reservación...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (error) {
+    <div class="error">
+      <p>{{ error }}</p>
+    </div>
+  }
+
+  <!-- Detalle -->
+  @if (!loading && !error && reservation) {
+    <div class="header">
+      <div>
+        <h1>🍽️ Reservación #{{ reservation.id }}</h1>
+        <span class="badge {{ stateColors[reservation.state] }}">
+          {{ stateLabels[reservation.state] }}
+        </span>
+      </div>
+      <div class="header-actions">
+        <a [routerLink]="['/reservations/edit', reservation.id]" class="btn-edit">Editar</a>
+        <a routerLink="/reservations" class="btn-back">← Volver</a>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- Info Cliente -->
+      <div class="card">
+        <h2>👤 Cliente</h2>
+        <div class="info-row">
+          <span class="label">Nombre</span>
+          <span class="value">{{ reservation.customerFullName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">ID Cliente</span>
+          <span class="value">#{{ reservation.customerId }}</span>
+        </div>
+      </div>
+
+      <!-- Info Reserva -->
+      <div class="card">
+        <h2>📋 Detalles</h2>
+        <div class="info-row">
+          <span class="label">Fecha y Hora</span>
+          <span class="value">{{ reservation.reservationTime | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Personas</span>
+          <span class="value">{{ reservation.numberOfGuests }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Mesa</span>
+          <span class="value">Mesa {{ reservation.tableNumber }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Restaurante</span>
+          <span class="value">#{{ reservation.restaurantId }}</span>
+        </div>
+        @if (reservation.observations) {
+          <div class="info-row">
+            <span class="label">Observaciones</span>
+            <span class="value">{{ reservation.observations }}</span>
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Platos pedidos -->
+    @if (reservation.reservationDetails && reservation.reservationDetails.length > 0) {
+      <div class="card mt">
+        <h2>🍴 Platos Pedidos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Plato</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (detail of reservation.reservationDetails; track detail.id) {
+              <tr>
+                <td>{{ detail.menuItemName }}</td>
+                <td>{{ detail.quantity }}</td>
+                <td>{{ detail.unitPrice | currency:'COP':'symbol':'1.0-0' }}</td>
+                <td>{{ detail.quantity * detail.unitPrice | currency:'COP':'symbol':'1.0-0' }}</td>
+              </tr>
+            }
+            <tr class="total-row">
+              <td colspan="3"><strong>Total</strong></td>
+              <td><strong>{{ getTotal() | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

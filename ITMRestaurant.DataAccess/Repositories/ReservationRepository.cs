@@ -12,6 +12,25 @@ namespace ITMRestaurant.DataAccess.Repositories
         {
         }
 
+
+        public override async Task<Reservation?> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .Include(r => r.Customer)
+                .Include(r => r.Table)
+                .Include(r => r.ReservationDetails)
+                    .ThenInclude(rd => rd.MenuItem)
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        public override async Task<IEnumerable<Reservation>> GetAllAsync()
+        {
+            return await _dbSet
+                .Include(r => r.Customer)
+                .Include(r => r.Table)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Reservation>> GetByCustomerIdAsync(int customerId)
         {
             return await _dbSet.Where(r => r.CustomerId == customerId)

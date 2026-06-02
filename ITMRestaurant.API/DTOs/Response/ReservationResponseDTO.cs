@@ -17,5 +17,9 @@ namespace ITMRestaurant.API.DTOs.Response
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        public ICollection<ReservationDetailResponseDTO> ReservationDetails { get; set; } = new List<ReservationDetailResponseDTO>();
+
+
+
     }
 }

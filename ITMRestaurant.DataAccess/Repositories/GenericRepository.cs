@@ -16,17 +16,17 @@ namespace ITMRestaurant.DataAccess.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             entity.CreatedAt = DateTime.UtcNow;
             entity.UpdatedAt = null;
@@ -35,14 +35,14 @@ namespace ITMRestaurant.DataAccess.Repositories
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             entity.UpdatedAt = DateTime.UtcNow;
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null)
@@ -52,7 +52,7 @@ namespace ITMRestaurant.DataAccess.Repositories
             }
         }
 
-        public async Task<bool> ExistsAsync(int id)
+        public  async Task<bool> ExistsAsync(int id)
         {
             return await _dbSet.AnyAsync(e => e.Id == id);
         }

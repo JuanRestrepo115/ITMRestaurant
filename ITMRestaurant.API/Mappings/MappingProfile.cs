@@ -35,7 +35,9 @@ namespace ITMRestaurant.API.Mappings
             // ── Reservation ───────────────────────────────────────
             CreateMap<ReservationRequestDTO, Reservation>()
                 .ForMember(dest => dest.State,
-                           opt => opt.MapFrom(src => ReservationState.Pending));
+                           opt => opt.MapFrom(src => ReservationState.Pending))
+                .ForMember(dest => dest.ReservationDetails,
+                           opt => opt.MapFrom(src => src.ReservationDetails));
             CreateMap<Reservation, ReservationResponseDTO>()
                 .ForMember(dest => dest.CustomerFullName,
                            opt => opt.MapFrom(src => $"{src.Customer.FirstName} {src.Customer.LastName}"))
@@ -45,7 +47,9 @@ namespace ITMRestaurant.API.Mappings
 
             // ── ReservationDetail ─────────────────────────────────
             CreateMap<ReservationDetailRequestDTO, ReservationDetail>();
-            CreateMap<ReservationDetail, ReservationDetailResponseDTO>();
+            CreateMap<ReservationDetail, ReservationDetailResponseDTO>()
+                .ForMember(dest => dest.MenuItemName,
+                           opt => opt.MapFrom(src => src.MenuItem.Name));
         }
     }
 }

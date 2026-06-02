@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="header">
+    <h1>🍽️ Reservaciones</h1>
+    <a routerLink="/reservations/create" class="btn-primary">+ Nueva Reserva</a>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading">
+      <p>Cargando reservaciones...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (error) {
+    <div class="error">
+      <p>{{ error }}</p>
+    </div>
+  }
+
+  <!-- Tabla -->
+  @if (!loading && !error) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Mesa</th>
+            <th>Fecha y Hora</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (reservations.length === 0) {
+            <tr>
+              <td colspan="7" class="empty">No hay reservaciones registradas</td>
+            </tr>
+          }
+          @for (reservation of reservations; track reservation.id) {
+            <tr>
+              <td>{{ reservation.id }}</td>
+              <td>{{ reservation.customerFullName }}</td>
+              <td>Mesa {{ reservation.tableNumber }}</td>
+              <td>{{ reservation.reservationTime | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ reservation.numberOfGuests }}</td>
+              <td>
+                <span class="badge {{ stateColors[reservation.state] }}">
+                  {{ stateLabels[reservation.state] }}
+                </span>
+              </td>
+              <td class="actions">
+                <a [routerLink]="['/reservations', reservation.id]" class="btn-detail">Ver</a>
+                <a [routerLink]="['/reservations/edit', reservation.id]" class="btn-edit">Editar</a>
+                <button (click)="deleteReservation(reservation.id)" class="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
