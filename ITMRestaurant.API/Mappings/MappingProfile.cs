@@ -42,11 +42,10 @@ namespace ITMRestaurant.API.Mappings
                 .ForMember(dest => dest.TableNumber,
                            opt => opt.MapFrom(src => src.Table.TableNumber));
 
+
             // ── ReservationDetail ─────────────────────────────────
             CreateMap<ReservationDetailRequestDTO, ReservationDetail>();
-            CreateMap<ReservationDetail, ReservationDetailResponseDTO>()
-                .ForMember(dest => dest.MenuItemName,
-                           opt => opt.MapFrom(src => src.MenuItem.Name));
+            CreateMap<ReservationDetail, ReservationDetailResponseDTO>();
         }
     }
 }

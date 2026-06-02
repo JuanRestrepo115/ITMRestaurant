@@ -15,5 +15,7 @@ namespace ITMRestaurant.API.DTOs.Request
 
         public string Observations { get; set; } = string.Empty;
 
+
+
     }
 }

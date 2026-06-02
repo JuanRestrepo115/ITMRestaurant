@@ -21,14 +21,12 @@ namespace ITMRestaurant.DataAccess.Repositories
                 .FirstOrDefaultAsync(c => c.Email.ToLower() == email.ToLower());
         }
 
-        public async Task<Customer?> GetCustomerWithReservationsAsync(int id)
+        public async Task<IEnumerable<Customer>> GetCustomersWithReservationsAsync()
         {
             return await _dbSet
                 .Include(c => c.Reservations)
-                    .ThenInclude(r => r.Table)
-                .Include(c => c.Reservations)
-                    .ThenInclude(r => r.Restaurant)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .Where(c => c.Reservations.Any())
+                .ToListAsync();
         }
 
     }

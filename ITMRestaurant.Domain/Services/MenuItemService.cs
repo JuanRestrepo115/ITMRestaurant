@@ -82,6 +82,8 @@ namespace ITMRestaurant.Domain.Services
                 throw new InvalidOperationException("Price must be greater than zero.");
             }
 
+            menuItem.IsAvailable = true;
+
             _logger.LogInformation("Creating a new menu item: {Name}", menuItem.Name);
             return await _menuItemRepository.CreateAsync(menuItem);
         }
@@ -117,7 +119,7 @@ namespace ITMRestaurant.Domain.Services
             existingItem.Description = menuItem.Description;
             existingItem.Price = menuItem.Price;
             existingItem.Category = menuItem.Category;
-            existingItem.IsAvailable = menuItem.IsAvailable;
+            existingItem.IsAvailable = true;
             existingItem.UpdatedAt = DateTime.UtcNow;
 
             _logger.LogInformation("Updating menu item with ID: {Id}", id);

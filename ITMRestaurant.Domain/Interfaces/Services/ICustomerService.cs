@@ -8,6 +8,6 @@ namespace ITMRestaurant.Domain.Interfaces.Services
         Task<Customer> CreateAsync(Customer customer);
         Task UpdateAsync(int id, Customer customer);
         Task DeleteAsync(int id);
-        Task<Customer?> GetCustomerWithReservationsAsync(int id);
+        Task<IEnumerable<Customer>> GetCustomersWithReservationsAsync();
     }
 }

@@ -40,24 +40,12 @@ public class CustomerController : ControllerBase
         return Ok(customerDto);
     }
 
-    [HttpGet("{id}/reservations")]
-    public async Task<ActionResult<CustomerResponseDTO>> GetWithReservations(int id)
+    [HttpGet("with-reservations")]
+    public async Task<ActionResult<IEnumerable<CustomerResponseDTO>>> GetWithReservations()
     {
-        try
-        {
-            var customer = await _customerService.GetByIdAsync(id);
-
-            if (customer == null)
-                return NotFound(new { message = $"Customer with ID {id} not found." });
-
-            var customerWithReservations = await _customerService.GetCustomerWithReservationsAsync(id);
-            var customerDto = _mapper.Map<CustomerResponseDTO>(customerWithReservations);
-            return Ok(customerDto);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var customers = await _customerService.GetCustomersWithReservationsAsync();
+        var customersDto = _mapper.Map<IEnumerable<CustomerResponseDTO>>(customers);
+        return Ok(customersDto);
     }
 
     [HttpPost]
