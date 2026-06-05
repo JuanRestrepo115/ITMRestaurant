@@ -21,8 +21,8 @@ El desarrollo backend replica de forma estricta la arquitectura desacoplada por 
 * **Documentación de API:** Swagger UI
 
 ### Frontend
-* **En Desarrollo**
 
+* **Angular 19**
 
 ---
 
